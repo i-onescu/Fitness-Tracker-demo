@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Fitness Tracker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/scripts.js"></script>
+</head>
+<body>
+    
+    <header>
+        <div class="container">
+            <h1>Fitness Tracker Dashboard</h1>
+        </div>
+    </header>
+
+    <section id="workout" class="content-section">
+        <h2>Workout Planning</h2>
+        <div class="workout-info">
+            <label for="workoutLength">Workout Length (minutes):</label>
+            <input type="number" id="workoutLength" placeholder="Enter workout length">
+        </div>
+        <div class="workout-info">
+            <label for="bodyType">Body Type:</label>
+            <select id="bodyType">
+                <option value="endurance">Endurance</option>
+                <option value="strength">Strength</option>
+                <option value="flexibility">Flexibility</option>
+            </select>
+        </div>
+        <div class="workout-info">
+            <label for="trainingCategory">Training Category:</label>
+            <select id="trainingCategory">
+                <option value="cardio">Cardio</option>
+                <option value="strengthTraining">Strength Training</option>
+                <option value="yoga">Yoga</option>
+                <!-- Add more categories as needed -->
+            </select>
+        </div>
+        <div class="workout-info">
+            <label for="exerciseDuration">Exercise Duration (minutes):</label>
+            <input type="number" id="exerciseDuration" placeholder="Enter exercise duration">
+        </div>
+        <div class="workout-info">
+            <label for="exerciseIntensity">Exercise Intensity:</label>
+            <select id="exerciseIntensity">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="muscleClass">Muscle Class:</label>
+        <select id="muscleClass">
+            <option value="abs">Abs</option>
+            <option value="legs">Legs</option>
+            <option value="arms">Arms</option>
+            <!-- Add more muscle classes as needed -->
+        </select>
+        <label for="progressDuration">Duration (minutes):</label>
+        <input type="number" id="progressDuration" placeholder="Enter workout duration">
+        <label for="progressIntensity">Intensity:</label>
+        <select id="progressIntensity">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        </div>
+
+        
+        <button id="planWorkoutBtn">Plan Workout</button>
+    </section>
+
+
+    <!-- <section id="tracker" class="content-section">
+        <h2>Today's Progress</h2>
+        
+         Add workout input fields as needed
+        
+        <button id="submitBtn">Submit</button>
+    </section>
+
+    <section id="feedback" class="content-section">
+        <h2>Feedback</h2>
+        <div class="feedback-info">
+            <label for="feedbackText">Your Feedback:</label>
+            <textarea id="feedbackText" placeholder="Share your feedback"></textarea>
+        </div>
+        <button id="submitFeedbackBtn">Submit Feedback</button>
+    </section> -->
+
+    <footer>
+        <p>&copy; 2024 Fitness Tracker</p>
+    </footer>
+
+
+
+</body>
+</html>
