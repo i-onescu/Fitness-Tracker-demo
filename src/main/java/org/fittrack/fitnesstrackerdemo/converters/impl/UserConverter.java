@@ -3,7 +3,6 @@ package org.fittrack.fitnesstrackerdemo.converters.impl;
 import org.fittrack.fitnesstrackerdemo.converters.ObjectConverter;
 import org.fittrack.fitnesstrackerdemo.models.dtos.UserDto;
 import org.fittrack.fitnesstrackerdemo.models.entities.User;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
 @Component

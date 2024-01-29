@@ -9,5 +9,5 @@ import org.hibernate.validator.constraints.Range;
 public record UserDto(@Nullable @Pattern(regexp = "[a-zA-Z]+") String firstName,
                       @Nullable @Pattern(regexp = "[a-zA-Z]+") String lastName,
                       @Nullable @Pattern(regexp = ".+@.+\\..+") String email,
-                      @Nullable @Range(min = 18, max = 75) Integer age) {
+                      @Nullable @Range(min = 18, max = 75) Integer age){
 }

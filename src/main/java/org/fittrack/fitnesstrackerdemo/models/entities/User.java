@@ -40,12 +40,13 @@ public class User {
     private Integer age;
 
     @NotNull
+    @Column(name = "date_created")
     private Date dateCreated;
 
     @NotNull
+    @Column(name = "status")
     private UserStatus status;
 
-    private boolean type;
 
 
 
