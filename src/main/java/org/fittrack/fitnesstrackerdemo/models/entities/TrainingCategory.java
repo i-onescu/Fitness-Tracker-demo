@@ -32,12 +32,8 @@ public class TrainingCategory {
     @Column(name = "exhaustion_factor")
     private Integer exhaustionFactor;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "category_exercises",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "exercise_id"))
-    Set<Exercise> exercises;
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    Set<Exercise> exercises;
 
     /*
     boolean values that determine type of training,

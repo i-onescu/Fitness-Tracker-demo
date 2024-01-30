@@ -22,7 +22,7 @@ public interface WorkoutRepository extends JpaRepository<Workout, Long> {
     @Query("SELECT wv FROM WorkoutVolume wv WHERE wv.workout = :id")
     Set<WorkoutVolume> findWorkoutVolumesByWorkoutId(Long id);
 
-    @Query("SELECT w FROM Workout w WHERE w.user = :userId and w.createdDateTime = :dateTime")
+    @Query("SELECT w FROM Workout w WHERE w.user.id = :userId and w.createdDateTime = :dateTime")
     Optional<Workout> findWorkoutByUserAndDateTime(Long userId, LocalDateTime dateTime);
 
 }

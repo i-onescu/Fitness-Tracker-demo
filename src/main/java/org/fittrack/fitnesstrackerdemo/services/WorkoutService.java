@@ -12,7 +12,6 @@ import org.fittrack.fitnesstrackerdemo.repositories.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Service
@@ -24,7 +23,7 @@ public class WorkoutService {
     private final WorkoutVolumeService workoutVolumeService;
     private final WorkoutConverter workoutConverter;
 
-    public Workout createWorkoutForUserById(Long userId, @Valid WorkoutDto workoutDto) {
+    public Set<WorkoutVolumeDto> createWorkoutForUserById(Long userId, @Valid WorkoutDto workoutDto) {
         Workout workout = workoutConverter.convertSecondToFirst(workoutDto);
         LocalDateTime dateTimeCreated = LocalDateTime.now();
 
@@ -38,11 +37,11 @@ public class WorkoutService {
         workoutVolumeService.createWorkoutVolume(workout);
         workoutRepository.save(workout);
 
-        return getWorkoutByUserIdAndDateTime(userId, dateTimeCreated);
+        return workoutVolumeService.getWorkoutVolumesByWorkout(getWorkoutByUserIdAndDateTime(userId, dateTimeCreated));
     }
 
     public Workout getWorkoutByUserIdAndDateTime(Long userId,LocalDateTime dateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm-ss-ns");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm-ss-ns");
 //        String formattedDateTime = dateTime.format(formatter);
 
         return workoutRepository.findWorkoutByUserAndDateTime(userId, dateTime)

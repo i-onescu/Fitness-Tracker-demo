@@ -39,36 +39,29 @@ public class WorkoutVolumeService {
                 trainingCategoryRepository.findTrainingCategoryByName(workout.getTrainingCategory())
                         .orElseThrow(CategoryNotFoundException::new);
 
-        String[] mgNames = workout.getTargetMuscleGroups().split("\\s+");
+        MuscleGroup muscleGroup = muscleGroupRepository.findMuscleGroupByName(workout.getTargetMuscleGroups())
+                .orElseThrow(MuscleGroupNotFoundException::new);
 
-        int nMuscleGroups = mgNames.length;
-        int maxExercises = (nMuscleGroups * 5) / 2;
+        int maxExercises = 4;
 
-        for (String muscleGroupName : mgNames) {
-            MuscleGroup muscleGroup = muscleGroupRepository.findMuscleGroupByName(muscleGroupName)
-                    .orElseThrow(MuscleGroupNotFoundException::new);
+        Set<Exercise> exercisesByMuscleGroup = exerciseRepository.findExercisesByMuscleGroup(muscleGroup);
+        logger.info(String.format("EXERCISEREPOSTITORY<FINDEXERCISEBYMUSCLEGROUP> %s", exercisesByMuscleGroup.toString()));
 
-            Set<Exercise> exercisesByMuscleGroup = exerciseRepository.findExercisesByMuscleGroup(muscleGroup);
-            logger.info(String.format("EXERCISEREPOSTITORY<FINDEXERCISEBYMUSCLEGROUP> %s", exercisesByMuscleGroup.toString()));
+        List<Exercise> exercises = new ArrayList<>(exerciseRepository.findExercisesByMuscleGroup(muscleGroup)
+                .stream()
+                .filter(exercise -> exercise.getTrainingCategories().equals(trainingCategory))
+                .toList());
 
+        WorkoutVolume workoutVolume = new WorkoutVolume();
+        for (int i = 0; i < maxExercises; i++) {
+            workoutVolume.setWorkout(workout);
+            workoutVolume.setExercise(exercises.get(i));
+            workoutVolume.setSetRangeMin(maxExercises / 2);
+            workoutVolume.setSetRangeMax(maxExercises / 2 + 1);
+            workoutVolume.setRepRangeMin(8);
+            workoutVolume.setRepRangeMax(12);
 
-            List<Exercise> exercises = new ArrayList<>(exerciseRepository.findExercisesByMuscleGroup(muscleGroup)
-                    .stream()
-                    .filter(exercise -> exercise.getTrainingCategories()
-                            .contains(trainingCategory))
-                    .toList());
-
-            WorkoutVolume workoutVolume = new WorkoutVolume();
-            for (int i = 0; i < maxExercises / nMuscleGroups; i++) {
-                workoutVolume.setWorkout(workout);
-                workoutVolume.setExercise(exercises.get(i));
-                workoutVolume.setSetRangeMin(maxExercises / nMuscleGroups);
-                workoutVolume.setSetRangeMax(maxExercises / nMuscleGroups + 1);
-                workoutVolume.setRepRangeMin(8);
-                workoutVolume.setRepRangeMax(12);
-
-                workoutVolumeRepository.save(workoutVolume);
-            }
+            workoutVolumeRepository.save(workoutVolume);
         }
     }
 
@@ -82,7 +75,6 @@ public class WorkoutVolumeService {
                         .toList()
         );
     }
-
 
 
 }
