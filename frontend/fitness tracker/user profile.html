@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="RO-ro">
+<head>
+    <title>Fitness Tracker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/scripts.js"></script>
+    <link rel="stylesheet" href="fitness-theme.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Fitness Tracker</h1>
+        </div>
+    </header>
+
+    <section id="profile" class="content-section">
+        
+        <h2>User Profile</h2>
+        
+        <form action="dashboard.html" method="get">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="Enter your username\Email">
+            </div>
+            <div class="form-group">
+                <label for="bodyweight">Bodyweight (kg):</label>
+                <input type="number" id="bodyweight" placeholder="Enter your bodyweight">
+            </div>
+            <div class="form-group">
+                <label for="height">Height (cm):</label>
+                <input type="number" id="height" placeholder="Enter your height">
+            </div>
+            <div class="form-group">
+                <label for="metabolism">Metabolism:</label>
+                <select id="metabolism">
+                    <option value="slow">Slow</option>
+                    <option value="normal">Normal</option>
+                    <option value="fast">Fast</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="category">Preferred Workout Category:</label>
+                <select id="category">
+                    <option value="bodybuilding">Bodybuilding</option>
+                    <option value="yoga">Yoga</option>
+                    <option value="cardio">Running/Cardio</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="goals">Fitness Goals:</label>
+                <textarea id="goals" placeholder="Describe your fitness goals"></textarea>
+            </div>
+            <button type="submit" id="saveProfileBtn">Save Profile</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Fitness Tracker</p>
+    </footer>
+
+</body>
+</html>
