@@ -16,4 +16,7 @@ public interface TrainingCategoryRepository extends JpaRepository<TrainingCatego
     @Query("SELECT tc FROM TrainingCategory tc WHERE tc.name ILIKE :nameStr")
     Optional<TrainingCategory> findTrainingCategoryByName(String nameStr);
 
+//    @Query(value = "INSERT INTO category_exerciese (category_id, exercise_id) VALUES (:id, :ex)", nativeQuery = true)
+//    void setExerciseForTrainingCategoryById(Long id, Long ex);
+
 }

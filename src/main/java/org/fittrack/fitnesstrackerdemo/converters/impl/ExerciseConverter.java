@@ -31,29 +31,19 @@ public class ExerciseConverter implements ObjectConverter<Exercise, ExerciseDto>
         exercise.setIsIntermediate(exerciseDto.intermediate());
         exercise.setIsExpert(exerciseDto.expert());
 
-        exercise.setMuscleGroups(
-                Arrays.stream(exerciseDto.muscleGroups().split("\\s"))
-                        .map(s ->
-                                muscleGroupRepository.findMuscleGroupByName(s)
-                                                .orElseThrow(MuscleGroupNotFoundException::new)
-                        )
-                        .collect(Collectors.toSet())
+        exercise.setMuscleGroup(
+                muscleGroupRepository.findMuscleGroupByName(exerciseDto.muscleGroups())
+                        .orElseThrow(MuscleGroupNotFoundException::new)
         );
 
         exercise.setTrainingCategories(
-                Arrays.stream(exerciseDto.trainingCategories().split("\\s"))
-                        .map(string ->
-                                trainingCategoryRepository.findTrainingCategoryByName(string)
-                                        .orElseThrow(CategoryNotFoundException::new)
-                        )
-                        .collect(Collectors.toSet())
+                trainingCategoryRepository.findTrainingCategoryByName(exerciseDto.trainingCategories())
+                        .orElseThrow(CategoryNotFoundException::new)
         );
 
         exercise.setExhaustionPoints(
-                exercise.getMuscleGroups()
-                        .stream()
-                        .mapToInt(MuscleGroup::getSize)
-                        .sum()
+                exercise.getTrainingCategories().getExhaustionFactor() *
+                        exercise.getMuscleGroup().getSize()
         );
 
         return exercise;
@@ -61,20 +51,10 @@ public class ExerciseConverter implements ObjectConverter<Exercise, ExerciseDto>
 
     @Override
     public ExerciseDto convertFirstToSecond(Exercise exercise) {
-        StringBuilder muscleGroups = new StringBuilder();
-        exercise.getMuscleGroups()
-                .forEach(muscleGroup ->
-                        muscleGroups.append(String.format("%s ", muscleGroup.getName())));
-
-        StringBuilder trainingCategories = new StringBuilder();
-        exercise.getTrainingCategories()
-                .forEach(trainingCategory ->
-                        trainingCategories.append(String.format("%s ", trainingCategory.getName().toUpperCase())));
-
         return ExerciseDto.builder()
                 .name(exercise.getName())
-                .muscleGroups(muscleGroups.toString())
-                .trainingCategories(trainingCategories.toString())
+                .muscleGroups(exercise.getMuscleGroup().getName())
+                .trainingCategories(exercise.getTrainingCategories().getName())
                 .build();
     }
 }
