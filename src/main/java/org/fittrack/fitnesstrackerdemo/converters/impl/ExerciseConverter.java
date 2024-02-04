@@ -1,5 +1,10 @@
 package org.fittrack.fitnesstrackerdemo.converters.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import org.fittrack.fitnesstrackerdemo.converters.ObjectConverter;
 import org.fittrack.fitnesstrackerdemo.exceptions.TrainingCategoryNotFoundException;
@@ -28,9 +33,6 @@ public class ExerciseConverter implements ObjectConverter<Exercise, ExerciseDto>
         Exercise exercise = new Exercise();
 
         exercise.setName(exerciseDto.name());
-//        exercise.setIsBeginner(exerciseDto.beginner());
-//        exercise.setIsIntermediate(exerciseDto.intermediate());
-//        exercise.setIsExpert(exerciseDto.expert());
 
         exercise.setMuscleGroups(
                 Arrays.stream(exerciseDto.muscleGroups().split("\\s"))

@@ -54,5 +54,18 @@ public class MuscleGroupController {
         }
     }
 
+//    @PostMapping
+//    public ResponseEntity<ResponsePayload> saveMuscleGroup(@RequestBody MuscleGroup muscleGroup) {
+//        try {
+//            muscleGroupService.save(muscleGroup);
+//
+//            return ResponseBuilder.buildResponsePayload("Muscle group created!",
+//                    HttpStatus.CREATED);
+//        } catch (MuscleGroupNotFoundException e) {
+//            return ResponseBuilder.buildResponsePayload("Wrong request!",
+//                    HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
 
 }
