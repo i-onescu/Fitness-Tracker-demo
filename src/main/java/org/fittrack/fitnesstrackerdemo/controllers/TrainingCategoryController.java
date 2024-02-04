@@ -17,7 +17,7 @@ public class TrainingCategoryController {
 
     private final TrainingCategoryService trainingCategoryService;
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<ResponsePayload> getTrainingCategoryByName(@PathVariable String name) {
         try {
             return ResponseBuilder.buildResponsePayload(trainingCategoryService.getTrainingCategoryByName(name),

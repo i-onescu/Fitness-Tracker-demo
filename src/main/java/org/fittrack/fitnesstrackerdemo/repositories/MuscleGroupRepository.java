@@ -16,8 +16,4 @@ public interface MuscleGroupRepository extends JpaRepository<MuscleGroup, Long> 
     @Query("SELECT mg FROM MuscleGroup mg WHERE mg.name ILIKE :nameStr")
     Optional<MuscleGroup> findMuscleGroupByName(String nameStr);
 
-    @Query(value = "INSERT INTO muscle_group_exercises (muscle_group_id, exercise_id) VALUES (:id, :ex)", nativeQuery = true)
-    void setExerciseForMuscleGroupById(Long id, Long ex);
-
-
 }

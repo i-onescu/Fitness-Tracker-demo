@@ -37,19 +37,4 @@ public class Exercise {
     @Column(name = "repetition_based")
     private boolean repetitionBased;
 
-
-//    @NotNull
-//    @Column(name = "exhaustion_points")
-//    private Integer exhaustionPoints;
-//
-//    // boolean values showing level of experience needed for each exercise will be useful when creating custom workout
-//    @Column(name = "is_beginner_exercise")
-//    private Boolean isBeginner;
-//
-//    @Column(name = "is_intermediate_exercise")
-//    private Boolean isIntermediate;
-//
-//    @Column(name = "is_expert_exercise")
-//    private Boolean isExpert;
-
 }

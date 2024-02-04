@@ -22,24 +22,22 @@ public class MuscleGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // name identifier or the muscle group
     @NotNull
     @Pattern(regexp = "[a-zA-Z]+")
     @Column(name = "name")
     private String name;
 
-    //done RDB relationship
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Set<Exercise> exercises;
-
-    /*
-     size of the muscle group will come in handy when calculating the total exhaustion points of a workout
-     determining the level of the workout (from easy to hard)
-     */
     @NotNull
     @Range(min = 5, max = 25)
     @Column(name = "size")
     private Integer size;
 
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "muscle_group_exercises",
+            joinColumns = @JoinColumn(name = "muscle_group_id"),
+            inverseJoinColumns = @JoinColumn(name = "exercise_id")
+    )
+    private Set<Exercise> exercises;
 
 }

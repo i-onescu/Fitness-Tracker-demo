@@ -19,9 +19,6 @@ public class MuscleGroupService {
 
     private final MuscleGroupRepository muscleGroupRepository;
 
-    Logger logger = LoggerFactory.getLogger(MuscleGroupService.class);
-
-
     public MuscleGroup getMuscleGroupById(Long id) {
         return muscleGroupRepository.findMuscleGroupById(id)
                 .orElseThrow(MuscleGroupNotFoundException::new);

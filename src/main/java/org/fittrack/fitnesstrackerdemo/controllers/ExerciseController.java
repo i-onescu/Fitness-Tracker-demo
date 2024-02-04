@@ -19,7 +19,7 @@ public class ExerciseController {
 
     private final ExerciseService exerciseService;
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<ResponsePayload> getExerciseByName(@PathVariable String name) {
         try {
             return ResponseBuilder.buildResponsePayload(exerciseService.getExerciseByName(name),

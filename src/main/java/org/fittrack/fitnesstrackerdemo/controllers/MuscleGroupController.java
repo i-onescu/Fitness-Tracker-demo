@@ -29,7 +29,7 @@ public class MuscleGroupController {
         }
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ResponsePayload> getMuscleGroupById(@PathVariable Long id) {
         try {
             return ResponseBuilder.buildResponsePayload(muscleGroupService.getMuscleGroupById(id),

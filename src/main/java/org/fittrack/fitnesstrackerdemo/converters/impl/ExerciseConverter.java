@@ -2,7 +2,7 @@ package org.fittrack.fitnesstrackerdemo.converters.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.fittrack.fitnesstrackerdemo.converters.ObjectConverter;
-import org.fittrack.fitnesstrackerdemo.exceptions.CategoryNotFoundException;
+import org.fittrack.fitnesstrackerdemo.exceptions.TrainingCategoryNotFoundException;
 import org.fittrack.fitnesstrackerdemo.exceptions.MuscleGroupNotFoundException;
 import org.fittrack.fitnesstrackerdemo.models.dtos.ExerciseDto;
 import org.fittrack.fitnesstrackerdemo.models.entities.Exercise;
@@ -47,7 +47,7 @@ public class ExerciseConverter implements ObjectConverter<Exercise, ExerciseDto>
                 Arrays.stream(exerciseDto.trainingCategories().split("\\s"))
                         .map(string -> {
                             TrainingCategory tc = trainingCategoryRepository.findTrainingCategoryByName(string)
-                                    .orElseThrow(CategoryNotFoundException::new);
+                                    .orElseThrow(TrainingCategoryNotFoundException::new);
                             tc.getExercises().add(exercise);
                             return tc;
                         })

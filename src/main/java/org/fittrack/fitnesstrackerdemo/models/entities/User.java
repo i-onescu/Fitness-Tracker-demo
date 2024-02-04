@@ -10,6 +10,9 @@ import org.fittrack.fitnesstrackerdemo.enums.UserStatus;
 import org.hibernate.validator.constraints.Range;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -41,12 +44,20 @@ public class User {
     @Column(name = "age")
     private Integer age;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_workouts",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "workout_id"))
+    Set<Workout> workouts;
+
     @NotNull
     @Column(name = "date_created")
-    private Date dateCreated;
+    private LocalDateTime dateTimeCreated;
 
     @NotNull
     @Column(name = "status")
-    private UserStatus status;
+    @Range(min = 0, max = 1)
+    private Integer status;
 
 }
