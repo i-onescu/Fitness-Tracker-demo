@@ -28,6 +28,17 @@ public class TrainingCategoryController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponsePayload> getTrainingCategoryByName(@PathVariable Long id) {
+        try {
+            return ResponseBuilder.buildResponsePayload(trainingCategoryService.getTrainingCategoryById(id),
+                    HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return ResponseBuilder.buildResponsePayload(String.format("No training category with id %s found!", id),
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<ResponsePayload> saveTrainingCategory(@RequestBody TrainingCategory trainingCategory) {
         try {

@@ -30,6 +30,17 @@ public class ExerciseController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponsePayload> getExerciseByName(@PathVariable Long id) {
+        try {
+            return ResponseBuilder.buildResponsePayload(exerciseService.getExerciseById(id),
+                    HttpStatus.FOUND);
+        } catch (ExerciseNotFoundException e) {
+            return ResponseBuilder.buildResponsePayload(String.format("No exercise with id %s!", id),
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @PostMapping
     public ResponseEntity<ResponsePayload> saveExercise(@RequestBody ExerciseDto exerciseDto) {

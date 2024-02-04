@@ -32,9 +32,5 @@ public class MuscleGroupService {
         muscleGroupRepository.save(muscleGroup);
     }
 
-    public void updateMuscleGroupExercises(MuscleGroup muscleGroup ,Exercise exercise) {
-
-
-    }
-
 }
+

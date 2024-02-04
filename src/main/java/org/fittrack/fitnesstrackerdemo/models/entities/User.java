@@ -4,13 +4,15 @@ package org.fittrack.fitnesstrackerdemo.models.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.fittrack.fitnesstrackerdemo.enums.UserStatus;
 import org.hibernate.validator.constraints.Range;
 
 import java.sql.Date;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User {
@@ -46,8 +48,5 @@ public class User {
     @NotNull
     @Column(name = "status")
     private UserStatus status;
-
-
-
 
 }

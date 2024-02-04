@@ -25,16 +25,16 @@ public class ExerciseService {
 
         if (exercise != null) {
             exerciseRepository.save(exercise);
-//            exercise.getMuscleGroups().forEach(muscleGroup -> muscleGroupRepository.setExerciseForMuscleGroupById(muscleGroup.getId(), exercise.getId()));
         }
     }
 
-
     public ExerciseDto getExerciseByName(String name) {
-        return exerciseConverter.convertFirstToSecond(
-                exerciseRepository.findExerciseByName(name)
-                        .orElseThrow(ExerciseNotFoundException::new)
-        );
+        return exerciseConverter.convertFirstToSecond(exerciseRepository.findExerciseByName(name)
+                        .orElseThrow(ExerciseNotFoundException::new));
     }
 
+    public ExerciseDto getExerciseById(Long id) {
+        return exerciseConverter.convertFirstToSecond(exerciseRepository.findExerciseById(id)
+                .orElseThrow(ExerciseNotFoundException::new));
+    }
 }

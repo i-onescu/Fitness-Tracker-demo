@@ -19,10 +19,8 @@ public class UserService {
 
 
     public UserDto getUserById(Long id) {
-        User user = userRepository.findUserById(id)
-                .orElseThrow(UserNotFoundException::new);
-
-        return userConverter.convertFirstToSecond(user);
+        return userConverter.convertFirstToSecond(userRepository.findUserById(id)
+                .orElseThrow(UserNotFoundException::new));
     }
 
     public void deleteUserById(Long id) {

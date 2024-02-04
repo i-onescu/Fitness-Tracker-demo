@@ -1,9 +1,12 @@
 package org.fittrack.fitnesstrackerdemo.models.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+
+@Getter
+@Setter
 @Entity
 @Table(name = "workout_volume")
 public class WorkoutVolume {
@@ -16,10 +19,8 @@ public class WorkoutVolume {
     @JoinColumn(name = "workout_id")
     private Workout workout;
 
-    /*
-        set of exercises picked by workout generator
-        to be done in this particular workout
-    */
+    // set of exercises picked by workout generator
+    // to be done in this particular workout
     @ManyToOne
     @JoinColumn(name = "exercise_id")
     private Exercise exercise;

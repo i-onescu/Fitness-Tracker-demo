@@ -20,6 +20,20 @@ public class WorkoutController {
 
     private final WorkoutService workoutService;
 
+
+    /*
+     http://localhost:8080/api/v1/workouts/{userId}
+
+     application json
+
+     {
+        "intensityLevel": 2,  --selected in drop down
+        "trainingCategory": "BODYBUILDING",  --selected in drop down list
+        "targetMuscleGroups": "CHEST", --selected in drop down list
+        "durationInMinutes": 30  --selected in drop down list
+     }
+    */
+
     @PostMapping("/{userId}")
     public ResponseEntity<ResponsePayload> createWorkoutForUser(@PathVariable Long userId,
                                                                 @RequestBody WorkoutDto workoutDto) {

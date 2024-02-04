@@ -16,15 +16,17 @@ public class TrainingCategoryService {
 
     private final TrainingCategoryRepository trainingCategoryRepository;
 
-
     public TrainingCategory getTrainingCategoryByName(@Valid String name) {
         return trainingCategoryRepository.findTrainingCategoryByName(name)
+                .orElseThrow(RuntimeException::new);
+    }
+
+    public TrainingCategory getTrainingCategoryById(Long id) {
+        return trainingCategoryRepository.findTrainingCategoryById(id)
                 .orElseThrow(RuntimeException::new);
     }
 
     public void save(TrainingCategory trainingCategory) {
         trainingCategoryRepository.save(trainingCategory);
     }
-
-
 }

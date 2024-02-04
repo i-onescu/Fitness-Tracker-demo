@@ -16,8 +16,13 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 
     Optional<Exercise> findExerciseByName(String name);
 
+    Optional<Exercise> findExerciseById(Long id);
+
     @Query("select e from Exercise e join e.trainingCategories etc where etc.id = ?1")
     List<Exercise> findExercisesByTrainingCategory(Long trainingCategoryId);
+
+    @Query("select e from Exercise e join e.muscleGroups emg where emg.id = ?1")
+    Set<Exercise> findExercisesByMuscleGroup(MuscleGroup muscleGroup);
 
 //    @Query("select e from Exercise e where e.isBeginner = true ")
 //    public List<Exercise> findExerciseByIsBeginnerTrue();
@@ -28,7 +33,6 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 //    @Query("select e from Exercise e where e.isExpert = true")
 //    public List<Exercise> findExerciseByIsExpertTrue();
 
-    @Query("select e from Exercise e join e.muscleGroups emg where emg.id = ?1")
-    Set<Exercise> findExercisesByMuscleGroup(MuscleGroup muscleGroup);
+
 
 }
