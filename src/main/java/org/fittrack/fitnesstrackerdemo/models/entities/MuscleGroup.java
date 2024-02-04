@@ -29,12 +29,8 @@ public class MuscleGroup {
     private String name;
 
     //done RDB relationship
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "muscle_group_exercises",
-            joinColumns = @JoinColumn(name = "muscle_group_id"),
-            inverseJoinColumns = @JoinColumn(name = "exercise_id"))
-    private Set<Exercise> exercises;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Set<Exercise> exercises;
 
     /*
      size of the muscle group will come in handy when calculating the total exhaustion points of a workout

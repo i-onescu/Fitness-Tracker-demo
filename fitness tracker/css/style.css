@@ -57,45 +57,39 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f2f2f2;
-}
-
-h1, h2 {
-    color: #3498db;
+    background-color: #f0f0f0;
 }
 
 header {
-    background-color: #333;
+    background-color: #3498db;
     color: white;
     text-align: center;
     padding: 1em;
 }
 
-#tracker {
+h1 {
+    margin: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.content-section {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
+    background-color: #ecf0f1;
     border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.activity {
-    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
-}
-
-.content-section {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 8px;
+    color: #333;
 }
 
 input, select, textarea {
@@ -105,19 +99,22 @@ input, select, textarea {
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
+    outline: none;
+    transition: border 0.3s ease;
 }
 
 button {
-    background-color: #3498db;
+    background-color: #e67e22;
     color: white;
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #d35400;
 }
 
 footer {
@@ -128,48 +125,4 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-}
-
-#profile {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-
-#workout {
-    max-width: 600px;
-    margin: 60px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#workout button {
-    background-color: #3498db;
-    color: white;
-}
-
-#workout button:hover {
-    background-color: #2980b9;
-}
-
-
-#feedback {
-    max-width: 600px;
-    margin: 60px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#feedback button {
-    background-color: #e67e22;
-    color: white;
-}
-
-#feedback button:hover {
-    background-color: #d35400;
 }
