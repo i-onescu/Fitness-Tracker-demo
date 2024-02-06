@@ -1,5 +1,8 @@
 package org.fittrack.fitnesstrackerdemo.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -14,6 +17,9 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "training_categories")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "name")
 public class TrainingCategory {
 
     @Id
@@ -53,7 +59,7 @@ public class TrainingCategory {
     private boolean enduranceTraining;
 
     //  list of exercises for said training category
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "category_exercises",
             joinColumns = @JoinColumn(name = "category_id"),

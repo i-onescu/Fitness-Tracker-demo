@@ -8,19 +8,23 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "workout_volume")
+@Table(name = "workout_volumes")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "volume_type",
+        discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorValue("")
 public class WorkoutVolume {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //  workout to whom this is associated
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "workout_id")
     private Workout workout;
 
-    // set of exercises picked by workout generator
-    // to be done in this particular workout
+    //  set of exercises picked by workout generator to be done in this particular workout
     @ManyToOne
     @JoinColumn(name = "exercise_id")
     private Exercise exercise;
@@ -34,18 +38,5 @@ public class WorkoutVolume {
     //  determined by trainingCategory
     @Column(name = "set_range_max")
     private Integer setRangeMax;
-
-    //  minimum value in rep range
-    //  determined by intensity level
-    @Column(name = "rep_range_min")
-    private Integer repRangeMin;
-
-    //  maximum value in rep range
-    //  determined by intensity level
-    @Column(name = "rep_range_max")
-    private Integer repRangeMax;
-
-
-
 
 }

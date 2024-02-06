@@ -52,4 +52,28 @@ public class WorkoutController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponsePayload> getWorkoutById(@PathVariable Long id) {
+        try {
+            return ResponseBuilder.buildResponsePayload(workoutService.getWorkoutVolumes(id),
+                    HttpStatus.OK);
+        } catch (UserNotFoundException e) {
+            return ResponseBuilder.buildResponsePayload(String.format("Workout with id %d not found!", id),
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponsePayload> deleteWorkoutById(@PathVariable Long id) {
+        try {
+            workoutService.deleteWorkoutById(id);
+
+            return ResponseBuilder.buildResponsePayload("Deleted workout!",
+                    HttpStatus.NO_CONTENT);
+        } catch (UserNotFoundException e) {
+            return ResponseBuilder.buildResponsePayload(String.format("Workout with id %d not found!", id),
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

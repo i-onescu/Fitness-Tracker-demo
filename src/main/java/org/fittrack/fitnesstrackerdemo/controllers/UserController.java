@@ -26,7 +26,7 @@ public class UserController {
     public ResponseEntity<ResponsePayload> getUserById(@PathVariable Long id) {
         try {
             return ResponseBuilder.buildResponsePayload(userService.getUserById(id),
-                    HttpStatus.FOUND);
+                    HttpStatus.OK);
         } catch (UserNotFoundException e) {
             return ResponseBuilder.buildResponsePayload(String.format("No user with id  %d found!", id),
                     HttpStatus.BAD_REQUEST);

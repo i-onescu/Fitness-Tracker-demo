@@ -3,35 +3,38 @@ package org.fittrack.fitnesstrackerdemo.converters.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.fittrack.fitnesstrackerdemo.models.dtos.displaydtos.ReadMuscleGroupDto;
-import org.fittrack.fitnesstrackerdemo.models.dtos.createdtos.WriteMuscleGroupDto;
-import org.fittrack.fitnesstrackerdemo.models.entities.MuscleGroup;
+import org.fittrack.fitnesstrackerdemo.models.dtos.displaydtos.ReadTrainingCategoryDto;
+import org.fittrack.fitnesstrackerdemo.models.dtos.createdtos.WriteTrainingCategoryDto;
+import org.fittrack.fitnesstrackerdemo.models.entities.TrainingCategory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MuscleGroupConverter {
+public class TrainingCategoryConverter {
 
-    public MuscleGroup convertSecondToFirst(WriteMuscleGroupDto writeMuscleGroupDto) {
+    public TrainingCategory convertSecondToFirst(WriteTrainingCategoryDto writeMuscleGroupDto) {
         ObjectMapper mapper =
                 new ObjectMapper()
                         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
             String s = mapper.writeValueAsString(writeMuscleGroupDto);
-            return mapper.readValue(s, MuscleGroup.class);
+            return mapper.readValue(s, TrainingCategory.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ReadMuscleGroupDto convertFirstToSecond(MuscleGroup muscleGroup) {
+
+    //    @Override
+    public ReadTrainingCategoryDto convertFirstToSecond(TrainingCategory trainingCategory) {
         ObjectMapper mapper =
                 new ObjectMapper()
                         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
-            String s = mapper.writeValueAsString(muscleGroup);
-            return mapper.readValue(s, ReadMuscleGroupDto.class);
+            String s = mapper.writeValueAsString(trainingCategory);
+            return mapper.readValue(s, ReadTrainingCategoryDto.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
+
 }

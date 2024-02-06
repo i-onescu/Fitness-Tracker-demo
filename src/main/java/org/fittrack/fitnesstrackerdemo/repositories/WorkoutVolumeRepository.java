@@ -11,6 +11,6 @@ import java.util.Set;
 public interface WorkoutVolumeRepository extends JpaRepository<WorkoutVolume, Long> {
 
     @Query("SELECT wv FROM WorkoutVolume wv WHERE wv.workout = :workout")
-    Set<WorkoutVolume> findWorkoutVolumeByWorkout(Workout workout);
+    Set<WorkoutVolume> findWorkoutVolumesByWorkout(Workout workout);
 
 }

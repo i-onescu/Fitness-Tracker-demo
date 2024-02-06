@@ -2,11 +2,15 @@ package org.fittrack.fitnesstrackerdemo.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.Iterators;
 import org.fittrack.fitnesstrackerdemo.converters.impl.WorkoutVolumeConverter;
 import org.fittrack.fitnesstrackerdemo.exceptions.TrainingCategoryNotFoundException;
 import org.fittrack.fitnesstrackerdemo.exceptions.MuscleGroupNotFoundException;
+import org.fittrack.fitnesstrackerdemo.exceptions.UserNotFoundException;
 import org.fittrack.fitnesstrackerdemo.models.dtos.WorkoutVolumeDto;
 import org.fittrack.fitnesstrackerdemo.models.entities.*;
+import org.fittrack.fitnesstrackerdemo.models.factories.RepetitionWorkoutVolumeFactory;
+import org.fittrack.fitnesstrackerdemo.models.factories.TimeWorkoutVolumeFactory;
 import org.fittrack.fitnesstrackerdemo.repositories.ExerciseRepository;
 import org.fittrack.fitnesstrackerdemo.repositories.MuscleGroupRepository;
 import org.fittrack.fitnesstrackerdemo.repositories.TrainingCategoryRepository;
@@ -15,10 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,54 +28,65 @@ import java.util.Set;
 public class WorkoutVolumeService {
 
     private final WorkoutVolumeRepository workoutVolumeRepository;
-    private final MuscleGroupRepository muscleGroupRepository;
     private final ExerciseRepository exerciseRepository;
-    private final TrainingCategoryRepository trainingCategoryRepository;
     private final WorkoutVolumeConverter workoutVolumeConverter;
 
-    Logger logger = LoggerFactory.getLogger(WorkoutVolumeService.class);
+    public void generateWorkoutVolumes(Workout workout) {
+        Set<Exercise> exercisesByMG = exerciseRepository.findExercisesByMuscleGroup(workout.getTargetMuscleGroup());
+        Set<Exercise> exercisesByTC = exerciseRepository.findExercisesByTrainingCategory(workout.getTrainingCategory());
 
-    public void createWorkoutVolume(Workout workout) {
+        List<Exercise> possibleExercises =
+                exercisesByMG.stream()
+                        .filter(exercisesByTC::contains)
+                        .toList();
 
-        TrainingCategory trainingCategory =
-                trainingCategoryRepository.findTrainingCategoryByName(workout.getTrainingCategory())
-                        .orElseThrow(TrainingCategoryNotFoundException::new);
 
-        MuscleGroup muscleGroup = muscleGroupRepository.findMuscleGroupByName(workout.getTargetMuscleGroups())
-                .orElseThrow(MuscleGroupNotFoundException::new);
+        int nExercises = 0;
+        if (workout.getDurationInMinutes() <= 30) {
+            nExercises = 2;
+        } else if (workout.getDurationInMinutes() <= 45) {
+            nExercises = 4;
+        } else if (workout.getDurationInMinutes() <= 60){
+            nExercises = 6;
+        } else if (workout.getDurationInMinutes() <= 90) {
+            nExercises = 8;
+        }
 
-        int maxExercises = 4;
-
-        Set<Exercise> exercisesByMuscleGroup = exerciseRepository.findExercisesByMuscleGroup(muscleGroup);
-        logger.info(String.format("EXERCISEREPOSTITORY<FINDEXERCISEBYMUSCLEGROUP> %s", exercisesByMuscleGroup.toString()));
-
-        List<Exercise> exercises = new ArrayList<>(exerciseRepository.findExercisesByMuscleGroup(muscleGroup)
-                .stream()
-                .filter(exercise -> exercise.getTrainingCategories().equals(trainingCategory))
-                .toList());
-
-        WorkoutVolume workoutVolume = new WorkoutVolume();
-        for (int i = 0; i < maxExercises; i++) {
-            workoutVolume.setWorkout(workout);
-            workoutVolume.setExercise(exercises.get(i));
-            workoutVolume.setSetRangeMin(maxExercises / 2);
-            workoutVolume.setSetRangeMax(maxExercises / 2 + 1);
-            workoutVolume.setRepRangeMin(8);
-            workoutVolume.setRepRangeMax(12);
-
-            workoutVolumeRepository.save(workoutVolume);
+        log.info("Generating volumes for workout...");
+        if (nExercises > possibleExercises.size()) {
+            nExercises = possibleExercises.size();
+        }
+        for (int i = 0; i < nExercises; i++) {
+            generateIndividualWorkoutVolume(workout, possibleExercises.get(i));
         }
     }
 
+    private void generateIndividualWorkoutVolume(Workout workout, Exercise exercise) {
+        if (exercise.isRepetitionBased()) {
+            RepetitionWorkoutVolumeFactory repetitionWorkoutVolumeFactory = new RepetitionWorkoutVolumeFactory();
+            workoutVolumeRepository.save(repetitionWorkoutVolumeFactory.createWorkoutVolume(workout, exercise));
+            log.info("Created new RepetitionWorkoutVolume!");
+        } else {
+            TimeWorkoutVolumeFactory timeWorkoutVolumeFactory = new TimeWorkoutVolumeFactory();
+            workoutVolumeRepository.save(timeWorkoutVolumeFactory.createWorkoutVolume(workout, exercise));
+            log.info("Created new TimeWorkoutVolume!");
+        }
+    }
 
     public Set<WorkoutVolumeDto> getWorkoutVolumesByWorkout(Workout workout) {
-        Set<WorkoutVolume> volumes = workoutVolumeRepository.findWorkoutVolumeByWorkout(workout);
+        Set<WorkoutVolume> volumes = workoutVolumeRepository.findWorkoutVolumesByWorkout(workout);
 
         return new HashSet<>(
                 volumes.stream()
                         .map(workoutVolumeConverter::convertFirstToSecond)
                         .toList()
         );
+    }
+
+    public void deleteWorkoutVolumesByWorkout(Workout workout) {
+        Set<WorkoutVolume> volumes = workoutVolumeRepository.findWorkoutVolumesByWorkout(workout);
+
+        workoutVolumeRepository.deleteAll(volumes);
     }
 
 
