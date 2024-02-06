@@ -3,7 +3,7 @@ package org.fittrack.fitnesstrackerdemo.controllers;
 import lombok.RequiredArgsConstructor;
 import org.fittrack.fitnesstrackerdemo.controllers.util.ResponseBuilder;
 import org.fittrack.fitnesstrackerdemo.models.dtos.ResponsePayload;
-import org.fittrack.fitnesstrackerdemo.models.entities.TrainingCategory;
+import org.fittrack.fitnesstrackerdemo.models.dtos.createdtos.WriteTrainingCategoryDto;
 import org.fittrack.fitnesstrackerdemo.services.TrainingCategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class TrainingCategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponsePayload> getTrainingCategoryByName(@PathVariable Long id) {
+    public ResponseEntity<ResponsePayload> getTrainingCategoryById(@PathVariable Long id) {
         try {
             return ResponseBuilder.buildResponsePayload(trainingCategoryService.getTrainingCategoryById(id),
                     HttpStatus.OK);
@@ -40,9 +40,9 @@ public class TrainingCategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponsePayload> saveTrainingCategory(@RequestBody TrainingCategory trainingCategory) {
+    public ResponseEntity<ResponsePayload> saveTrainingCategory(@RequestBody WriteTrainingCategoryDto writeTrainingCategoryDto) {
         try {
-            trainingCategoryService.save(trainingCategory);
+            trainingCategoryService.save(writeTrainingCategoryDto);
 
             return ResponseBuilder.buildResponsePayload("Created training category!",
                     HttpStatus.CREATED);

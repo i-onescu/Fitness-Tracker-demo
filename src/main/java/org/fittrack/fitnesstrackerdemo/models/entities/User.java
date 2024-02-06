@@ -6,11 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
-import org.fittrack.fitnesstrackerdemo.enums.UserStatus;
 import org.hibernate.validator.constraints.Range;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 

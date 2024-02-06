@@ -6,7 +6,7 @@ import lombok.Builder;
 import org.hibernate.validator.constraints.Range;
 
 @Builder
-public record WorkoutDto(@NotNull @Range(min = 1, max = 5) Integer intensityLevel,
-                         @NotNull @Pattern(regexp = "[a-zA-Z]+") String trainingCategory,
-                         @NotNull @Pattern(regexp = "[a-zA-Z]+") String targetMuscleGroups,
+public record WorkoutDto(@NotNull @Pattern(regexp = "[a-zA-Z]+") String intensity,
+                         @NotNull @Pattern(regexp = "[0-9]+") Long trainingCategoryId,
+                         @NotNull @Pattern(regexp = "[0-9]+") Long muscleGroupId,
                          @NotNull @Range(min = 30, max = 90) Integer durationInMinutes) { }

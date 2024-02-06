@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.fittrack.fitnesstrackerdemo.controllers.util.ResponseBuilder;
 import org.fittrack.fitnesstrackerdemo.exceptions.MuscleGroupNotFoundException;
 import org.fittrack.fitnesstrackerdemo.models.dtos.ResponsePayload;
-import org.fittrack.fitnesstrackerdemo.models.entities.MuscleGroup;
-import org.fittrack.fitnesstrackerdemo.models.entities.TrainingCategory;
+import org.fittrack.fitnesstrackerdemo.models.dtos.createdtos.WriteMuscleGroupDto;
 import org.fittrack.fitnesstrackerdemo.services.MuscleGroupService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ public class MuscleGroupController {
     public ResponseEntity<ResponsePayload> getMuscleGroupByName(@PathVariable String name) {
         try {
             return ResponseBuilder.buildResponsePayload(muscleGroupService.getMuscleGroupByName(name),
-                    HttpStatus.FOUND);
+                    HttpStatus.OK);
         } catch (MuscleGroupNotFoundException e) {
             return ResponseBuilder.buildResponsePayload(String.format("No muscle group with name %s found!", name),
                     HttpStatus.BAD_REQUEST);
@@ -33,7 +32,7 @@ public class MuscleGroupController {
     public ResponseEntity<ResponsePayload> getMuscleGroupById(@PathVariable Long id) {
         try {
             return ResponseBuilder.buildResponsePayload(muscleGroupService.getMuscleGroupById(id),
-                    HttpStatus.FOUND);
+                    HttpStatus.OK);
         } catch (MuscleGroupNotFoundException e) {
             return ResponseBuilder.buildResponsePayload(String.format("No muscle group with id %s found!", id),
                     HttpStatus.BAD_REQUEST);
@@ -42,9 +41,9 @@ public class MuscleGroupController {
 
 
     @PostMapping
-    public ResponseEntity<ResponsePayload> saveMuscleGroup(@RequestBody MuscleGroup muscleGroup) {
+    public ResponseEntity<ResponsePayload> saveMuscleGroup(@RequestBody WriteMuscleGroupDto writeMuscleGroupDto) {
         try {
-            muscleGroupService.save(muscleGroup);
+            muscleGroupService.save(writeMuscleGroupDto);
 
             return ResponseBuilder.buildResponsePayload("Muscle group created!",
                     HttpStatus.CREATED);

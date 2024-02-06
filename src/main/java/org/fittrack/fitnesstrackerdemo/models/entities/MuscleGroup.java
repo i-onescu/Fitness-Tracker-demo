@@ -1,5 +1,9 @@
 package org.fittrack.fitnesstrackerdemo.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -13,6 +17,9 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "muscle_groups")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "name")
 public class MuscleGroup {
 
     // will be a table editable only by admin account or simply added in database
@@ -31,7 +38,6 @@ public class MuscleGroup {
     @Range(min = 5, max = 25)
     @Column(name = "size")
     private Integer size;
-
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "muscle_group_exercises",

@@ -10,6 +10,9 @@ import org.fittrack.fitnesstrackerdemo.models.entities.User;
 import org.fittrack.fitnesstrackerdemo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -19,18 +22,24 @@ public class UserService {
 
 
     public UserDto getUserById(Long id) {
-        return userConverter.convertFirstToSecond(userRepository.findUserById(id)
-                .orElseThrow(UserNotFoundException::new));
+        User user = userRepository.findUserById(id)
+                .orElseThrow(UserNotFoundException::new);
+
+        return userConverter.convertFirstToSecond(user);
     }
 
     public void deleteUserById(Long id) {
         User user = userRepository.findUserById(id)
                 .orElseThrow(UserNotFoundException::new);
+
         userRepository.delete(user);
     }
 
     public void save(@Valid UserDto userDto) {
         User user = userConverter.convertSecondToFirst(userDto);
+
+        user.setStatus(1);
+        user.setDateTimeCreated(LocalDateTime.now());
         userRepository.save(user);
     }
 
@@ -66,7 +75,6 @@ public class UserService {
         }
 
     }
-
 
 
 }

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import org.fittrack.fitnesstrackerdemo.enums.Intensity;
 import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDateTime;
@@ -21,34 +22,33 @@ public class Workout {
 
     //  user that generated the workout
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id",
+            referencedColumnName = "id")
     private User user;
 
-    // target muscle groups for this workout picked by user at workout generation
-    // String of muscleGroup names separated by spaces
-    @NotNull
-    @Pattern(regexp = "[a-zA-Z]+")
-    @Column(name = "target_muscle_groups")
-    private String targetMuscleGroups;
+    //  target muscle groups for this workout (chosen by user at workout generation)
+    @ManyToOne
+    @JoinColumn(name = "muscle_group_id",
+            referencedColumnName = "id")
+    private MuscleGroup targetMuscleGroup;
 
-    //  represents name of the workout type , bodybuilding, cardio, yoga, etc.
-    @NotNull
-    @Pattern(regexp = "[a-zA-Z]+")
-    @Column(name = "training_category")
-    private String trainingCategory;
+    //  represents name of the workout type (chosen by user at workout generation)
+    @ManyToOne
+    @JoinColumn(name = "training_category_id",
+            referencedColumnName = "id")
+    private TrainingCategory trainingCategory;
 
-    //  workout duration in minutes
+    //  workout duration in minutes (chosen by user at workout generation)
     @NotNull
     @Range(min = 30, max = 90)
     @Column(name = "duration_in_minutes")
     private Integer durationInMinutes;
 
-    // workout intensity level
-    // picked by user at workout generation
+    //  workout intensity level (chosen by user at workout generation)
     @NotNull
-    @Range(min = 1, max = 5)
+    @Enumerated(EnumType.STRING)
     @Column(name = "workout_intensity")
-    private Integer intensityLevel;
+    private Intensity intensity;
 
     //  workout creation date and time
     @NotNull

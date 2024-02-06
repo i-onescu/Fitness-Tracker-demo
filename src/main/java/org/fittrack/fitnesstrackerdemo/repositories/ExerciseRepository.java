@@ -18,10 +18,13 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 
     Optional<Exercise> findExerciseById(Long id);
 
-    @Query("select e from Exercise e join e.trainingCategories etc where etc.id = ?1")
-    List<Exercise> findExercisesByTrainingCategory(Long trainingCategoryId);
+    @Query("select e from Exercise e join e.trainingCategories etc where etc = ?1")
+    Set<Exercise> findExercisesByTrainingCategory(TrainingCategory trainingCategory);
 
-    @Query("select e from Exercise e join e.muscleGroups emg where emg.id = ?1")
+    @Query("select e from Exercise e join e.muscleGroups emg where emg = ?1")
     Set<Exercise> findExercisesByMuscleGroup(MuscleGroup muscleGroup);
 
+//    @Query("select e from Exercise e join e.muscleGroups emg where e = emg ")
+//    List<Exercise> findAllByMuscleGroupAndAndTrainingCategory(MuscleGroup muscleGroup,
+//                                                              TrainingCategory trainingCategory);
 }
